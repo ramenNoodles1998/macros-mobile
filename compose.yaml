@@ -13,3 +13,14 @@ services:
          action: sync
        - path: ./macros-backend/go.*
          action: rebuild
+  macros-client:
+    build: 
+      context: ./macros-client
+    ports:
+      - 8080:8080
+    develop:
+      watch:
+       - path: ./macros-client
+         action: sync
+       - path: ./macros-client/package*.json
+         action: rebuild
