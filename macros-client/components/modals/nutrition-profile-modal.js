@@ -24,7 +24,7 @@ const NutritonProfileModal = (props) => {
       onRequestClose={() => props.setModalVisible(!props.modalVisible)}
     >
         <View className='m-auto bg-teal-800 shadow-2xl rounded'>
-            <MacroText>HELLO NUTRITION</MacroText>
+            <MacroText>HELLO NUTRITIONs</MacroText>
         </View>
     </Modal>
     // </Pressable>
