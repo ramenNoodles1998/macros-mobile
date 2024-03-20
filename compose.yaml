@@ -5,8 +5,8 @@ services:
     ports:
       - 3030:3030
     volumes: 
-      - C:\Users\roman\.aws\credentials:/root/.aws/credentials:ro
-      - C:\Users\roman\.aws\config:/root/.aws/config:ro
+      - ~/.aws/credentials:/root/.aws/credentials:ro
+      - ~/.aws/config:/root/.aws/config:ro
     develop:
       watch:
        - path: ./macros-backend
@@ -16,11 +16,13 @@ services:
   macros-client:
     build: 
       context: ./macros-client
+    command: npm run web
     ports:
       - 8080:8080
     develop:
       watch:
        - path: ./macros-client
+         target: /app
          action: sync
-       - path: ./macros-client/package*.json
-         action: rebuild
+         ignore: 
+           - node_modules/

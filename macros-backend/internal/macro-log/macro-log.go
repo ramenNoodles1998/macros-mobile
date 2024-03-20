@@ -281,7 +281,7 @@ func getDailyMacroTotal(w http.ResponseWriter, r *http.Request) {
 				ComparisonOperator: aws.String("BEGINS_WITH"),
 				AttributeValueList: []*dynamodb.AttributeValue {
 					{
-						S: aws.String(LOG_PREFIX),
+						S: aws.String(LOG_PREFIX + time.Now().Format(YYYYMMDD)),
 					},
 				},
 			},
