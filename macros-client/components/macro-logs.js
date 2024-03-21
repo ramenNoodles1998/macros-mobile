@@ -10,6 +10,7 @@ import {
   selectDailyMacroTotals,
   removeDailyMacroTotal,
   addDailyMacroTotal,
+  selectCalories,
 } from '../feature/macro-slice';
 import { output } from '../src/output';
 

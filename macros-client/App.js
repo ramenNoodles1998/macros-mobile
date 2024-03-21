@@ -12,11 +12,11 @@ const App = () => {
   const [nutritionProfileModalVisible, setNutritionProfileModalVisible] = useState(false);
   return (
     <View className='container mx-auto bg-teal-700'>
-      <NutritonProfileModal
-        setModalVisible={setNutritionProfileModalVisible}
-        modalVisible={nutritionProfileModalVisible}
-      ></NutritonProfileModal>
       <Provider store={store}>
+        <NutritonProfileModal
+          setModalVisible={setNutritionProfileModalVisible}
+          modalVisible={nutritionProfileModalVisible}
+        ></NutritonProfileModal>
         <View className='flex flex-row justify-between'>
           <MacrosText className='text-3xl p-3'>Macro</MacrosText>
           <Pressable

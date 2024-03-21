@@ -76,10 +76,15 @@ export const macrosSlice = createSlice({
       carbs: 0,
       fat: 0,
     },
+    calories: 0,
     foodItems: [],
     foodLogs: [],
   },
   reducers: {
+    setCalories: (state, action) => {
+      console.log(action.payload)
+      state.calories = action.payload;
+    },
     addFoodItem: (state, action) => {
       state.foodItems = [action.payload, ...state.foodItems];
     },
@@ -135,11 +140,13 @@ export const {
   saveDailyMacroTotal,
   removeDailyMacroTotal,
   addDailyMacroTotal,
+  setCalories,
 } = macrosSlice.actions;
 
 export const selectDailyMacroTotals = (state) =>
   state.macrosSliceReducer.dailyMacroTotals;
 export const selectFoodItems = (state) => state.macrosSliceReducer.foodItems;
 export const selectFoodLogs = (state) => state.macrosSliceReducer.foodLogs;
+export const selectCalories = (state) => state.macrosSliceReducer.calories;
 
 export default macrosSlice.reducer;

@@ -6,12 +6,14 @@ import {
   addDailyMacroTotal,
   getDailyMacroTotalAsync,
   selectDailyMacroTotals,
+  selectCalories
 } from '../feature/macro-slice';
 import { useSelector, useDispatch } from 'react-redux';
 import MacroText from './macro-components/macro-text';
 
 const MacroTotals = () => {
   const macroTotals = useSelector(selectDailyMacroTotals);
+  const calories = useSelector(selectCalories);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDailyMacroTotalAsync('123'));
@@ -49,6 +51,10 @@ const MacroTotals = () => {
         color='rgba(19, 78, 74, 1)'
         height={15}
       />
+      <View className='flex flex-row py-1'>
+        <MacroText className='p-1 text-lg'>Calories</MacroText>
+        <MacroText className='p-1 text-lg'>{calories}</MacroText>
+      </View>
     </View>
   );
 };
