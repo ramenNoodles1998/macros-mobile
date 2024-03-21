@@ -265,7 +265,6 @@ func deleteMacroLog(w http.ResponseWriter, r *http.Request) {
 
 func getDailyMacroTotal(w http.ResponseWriter, r *http.Request) {
 	var svc *dynamodb.DynamoDB = dynamoservice.DynamoService()
-	fmt.Println("hello from get daily macro")
 	result, err := svc.Query(&dynamodb.QueryInput{
 		TableName: aws.String(tableName),
 		KeyConditions: map[string]*dynamodb.Condition{

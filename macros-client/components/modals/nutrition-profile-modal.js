@@ -39,10 +39,14 @@ const NutritonProfileModal = (props) => {
 
   }
 
+  const requestAxios = async () => {
+    var x = await axios.get('http://localhost:3030/api/get-nutrition-profile');
+    console.log(x);
+  }
 
-  useEffect(() => {
-    axios.get('localhost:3030/ap/')
-  }, []);
+
+  // useEffect(async () => {
+  // }, []);
 
   return (
     // <Pressable onPress={() => props.setModalVisible(!props.modalVisible)}>
@@ -73,7 +77,7 @@ const NutritonProfileModal = (props) => {
             minimumValue={0}
             maximumValue={(calories / 4)}
             value={protein}
-            onValueChange={setMacros}
+            onValueChange={setProtein}
             minimumTrackTintColor="#FFFFFF"
             maximumTrackTintColor="#000000"
           />
@@ -115,6 +119,12 @@ const NutritonProfileModal = (props) => {
             className='block mt-3 text-white w-full rounded-md border-0 py-1.5 pl-5 pr-20 ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6'
           ></TextInput>
         </View>
+          <Pressable
+            onPress={() => requestAxios()}
+            className='p-1 self-end rounded'
+          >
+            <MacroText>Close</MacroText>
+          </Pressable>
       </View>
     </Modal>
     // </Pressable>
