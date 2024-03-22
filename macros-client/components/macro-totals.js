@@ -1,22 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { output } from '../src/output';
 import {
-  addDailyMacroTotal,
   getDailyMacroTotalAsync,
   selectDailyMacroTotals,
-  selectCalories
+  selectCalories,
+  selectProtein,
+  selectCarbs,
+  selectFat,
+  getNutritionProfileAsync
 } from '../feature/macro-slice';
 import { useSelector, useDispatch } from 'react-redux';
 import MacroText from './macro-components/macro-text';
 
 const MacroTotals = () => {
+  
+  const [proteinProgress, setProteinProgress] = useState(0);
   const macroTotals = useSelector(selectDailyMacroTotals);
+  const protein = useSelector(selectProtein);
+  console.log(protein);
+  const carbs = useSelector(selectCarbs);
+  const fat = useSelector(selectFat);
   const calories = useSelector(selectCalories);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDailyMacroTotalAsync('123'));
+    dispatch(getNutritionProfileAsync('123123'))
+    setProteinProgress(macroTotals.protein/protein)
   }, []);
 
   return (
@@ -26,7 +37,7 @@ const MacroTotals = () => {
         <MacroText className='p-1 text-lg'>{macroTotals.protein}g</MacroText>
       </View>
       <Progress.Bar
-        progress={0.3}
+        progress={proteinProgress}
         width={300}
         color='rgba(19, 78, 74, 1)'
         height={15}

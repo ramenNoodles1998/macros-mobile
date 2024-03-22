@@ -90,3 +90,20 @@ export async function GetDailyMacroTotal() {
     console.warn(e);
   }
 }
+
+export async function GetNutritionProfile() {
+  try {
+    return await axios.get('http://localhost:3030/api/get-nutrition-profile');
+  } catch (e) {
+    console.warn(e);
+  }
+}
+
+export async function SaveNutritionProfile(nutritionProfile) {
+  try {
+    return await axios.post('http://localhost:3030/api/save-nutrition-profile', nutritionProfile);
+  } catch (e) {
+    console.warn(e);
+  }
+}
+
