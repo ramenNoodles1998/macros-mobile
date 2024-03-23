@@ -21,6 +21,7 @@ type MacroLogDB struct {
 	Protein float64 
 	Carbs float64
 	Fat float64
+	Calories float64 
 }
 
 type MacroLog struct {
@@ -29,6 +30,7 @@ type MacroLog struct {
 	Protein float64  `json:"protein"`
 	Carbs float64  `json:"carbs"`
 	Fat float64  `json:"fat"`
+	Calories float64 `json:"calories"`
 }
 
 type Macro struct {
@@ -73,6 +75,7 @@ func saveMacroLog(w http.ResponseWriter, r *http.Request) {
 		Protein: m.Protein,
 		Carbs: m.Carbs,
 		Fat: m.Fat,
+		Calories: m.Calories,
 	}
 
 	returnMacroLog := MacroLog{
@@ -81,6 +84,7 @@ func saveMacroLog(w http.ResponseWriter, r *http.Request) {
 		Protein: m.Protein,
 		Carbs: m.Carbs,
 		Fat: m.Fat,
+		Calories: m.Calories,
 	}
 
 	av, err := dynamodbattribute.MarshalMap(macroLog)
@@ -150,6 +154,7 @@ func getMacroLogs(w http.ResponseWriter, r *http.Request) {
 			Protein: logDB.Protein,
 			Carbs: logDB.Carbs,
 			Fat: logDB.Fat,
+			Calories: logDB.Calories,
 		}
 
 		log.Date, _ = strings.CutPrefix(log.Date, LOG_PREFIX)
@@ -210,6 +215,7 @@ func getMacroLogId(w http.ResponseWriter, r *http.Request) {
 			Protein: logDB.Protein,
 			Carbs: logDB.Carbs,
 			Fat: logDB.Fat,
+			Calories: logDB.Calories,
 		}
 
 		logs = append(logs, log)
@@ -237,6 +243,7 @@ func deleteMacroLog(w http.ResponseWriter, r *http.Request) {
 		Protein: m.Protein,
 		Carbs: m.Carbs,
 		Fat: m.Fat,
+		Calories: m.Calories,
 	}
 
 	var svc *dynamodb.DynamoDB = dynamoservice.DynamoService()
@@ -292,8 +299,7 @@ func getDailyMacroTotal(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Got error calling GetItem: %s", err)
 		return
 	}
-	//TODO: return daily macro total and add up in for loop. Make sure if nothing is grabbed and auto set  id and date from len > 0
-	var ml = MacroLog{ Id: uuidRoman, Date: time.Now().Format(YYYYMMDD), Protein: 0, Carbs: 0, Fat: 0 }
+	var ml = MacroLog{ Id: uuidRoman, Date: time.Now().Format(YYYYMMDD), Protein: 0, Carbs: 0, Fat: 0, Calories: 0, }
 	if result.Items == nil || len(result.Items) == 0 {
 		fmt.Printf("Could not find Daily Macro Total")
 		json.NewEncoder(w).Encode(ml)
@@ -309,6 +315,7 @@ func getDailyMacroTotal(w http.ResponseWriter, r *http.Request) {
 			Protein: ml.Protein + mldb.Protein,
 			Carbs: ml.Carbs + mldb.Carbs,
 			Fat: ml.Fat + mldb.Fat,
+			Calories: ml.Calories + mldb.Calories,
 		}
 		ml.Date, _ = strings.CutPrefix(ml.Date, LOG_PREFIX)
 		if err != nil {

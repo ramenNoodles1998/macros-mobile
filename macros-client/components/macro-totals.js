@@ -9,26 +9,39 @@ import {
   selectProtein,
   selectCarbs,
   selectFat,
-  getNutritionProfileAsync
+  getNutritionProfileAsync,
+  selectNutritionProfile
 } from '../feature/macro-slice';
 import { useSelector, useDispatch } from 'react-redux';
 import MacroText from './macro-components/macro-text';
 
 const MacroTotals = () => {
-  
-  const [proteinProgress, setProteinProgress] = useState(0);
   const macroTotals = useSelector(selectDailyMacroTotals);
-  const protein = useSelector(selectProtein);
-  console.log(protein);
-  const carbs = useSelector(selectCarbs);
-  const fat = useSelector(selectFat);
-  const calories = useSelector(selectCalories);
+  const nutritionProfile = useSelector(selectNutritionProfile);
+  const [proteinProgress, setProteinProgress] = useState(0)
+  const [carbsProgress, setCarbsProgress] = useState(0)
+  const [fatProgress, setFatProgress] = useState(0)
+  const [caloriesProgress, setCaloriesProgress] = useState(0)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDailyMacroTotalAsync('123'));
     dispatch(getNutritionProfileAsync('123123'))
-    setProteinProgress(macroTotals.protein/protein)
   }, []);
+
+  useEffect(() => {
+    if (!isNaN(macroTotals.protein/nutritionProfile.protein)) {
+      setProteinProgress(macroTotals.protein/nutritionProfile.protein);
+    }
+    if (!isNaN(macroTotals.carbs/nutritionProfile.carbs)) {
+      setCarbsProgress(macroTotals.carbs/nutritionProfile.carbs);
+    }
+    if (!isNaN(macroTotals.fat/nutritionProfile.fat)) {
+      setFatProgress(macroTotals.fat/nutritionProfile.fat);
+    }
+    if (!isNaN(macroTotals.calories/nutritionProfile.calories)) {
+      setCaloriesProgress(macroTotals.calories/nutritionProfile.calories);
+    }
+  }, [nutritionProfile, macroTotals]);
 
   return (
     <View className='px-3 pb-3 mx-3 shadow-2xl bg-teal-800 rounded'>
@@ -47,7 +60,7 @@ const MacroTotals = () => {
         <MacroText className='p-1 text-lg'>{macroTotals.carbs}g</MacroText>
       </View>
       <Progress.Bar
-        progress={0.3}
+        progress={carbsProgress}
         width={300}
         color='rgba(19, 78, 74, 1)'
         height={15}
@@ -57,15 +70,21 @@ const MacroTotals = () => {
         <MacroText className='p-1 text-lg'>{macroTotals.fat}g</MacroText>
       </View>
       <Progress.Bar
-        progress={0.3}
+        progress={fatProgress}
         width={300}
         color='rgba(19, 78, 74, 1)'
         height={15}
       />
       <View className='flex flex-row py-1'>
         <MacroText className='p-1 text-lg'>Calories</MacroText>
-        <MacroText className='p-1 text-lg'>{calories}</MacroText>
+        <MacroText className='p-1 text-lg'>{macroTotals.calories}</MacroText>
       </View>
+      <Progress.Bar
+        progress={caloriesProgress}
+        width={300}
+        color='rgba(19, 78, 74, 1)'
+        height={15}
+      />
     </View>
   );
 };

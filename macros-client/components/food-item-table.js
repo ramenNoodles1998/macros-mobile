@@ -5,13 +5,12 @@ import {
   getFoodItemsAsync,
   deleteFoodItemAsync,
   addDailyMacroTotal,
-  selectDailyMacroTotals,
+  saveFoodLogAsync,
 } from '../feature/macro-slice';
 import { View, FlatList, Pressable } from 'react-native';
 import FoodItemModal from './modals/food-item-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { output } from '../src/output';
-import { AddMacroLog } from '../feature/macro-api';
 
 const FoodItemTable = () => {
   const [macro, setMacro] = useState({
@@ -20,6 +19,7 @@ const FoodItemTable = () => {
     carbs: 0,
     fat: 0,
     serving: '',
+    calories: 0,
   });
   const [foodItemModalVisible, setFoodItemModalVisible] = useState(false);
   const foodItems = useSelector(selectFoodItems);
@@ -34,8 +34,11 @@ const FoodItemTable = () => {
   };
 
   const addFoodItem = (item) => {
-    dispatch(addDailyMacroTotal({ ...item }));
-    dispatch(AddMacroLog({ ...item }));
+    let foodItem = {
+      ...item,
+    };
+    dispatch(addDailyMacroTotal(foodItem));
+    dispatch(saveFoodLogAsync(foodItem));
   };
 
   const openModal = (item) => {

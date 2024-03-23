@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-  AddMacroLog,
   AddFoodItem,
   GetFoodItems,
   DeleteFoodItem,
   GetFoodLogs,
   DeleteFoodLog,
   SaveFoodLog,
-  SaveDailyMacroTotal,
   GetDailyMacroTotal,
   SaveNutritionProfile,
-  GetNutritionProfile
+  GetNutritionProfile,
 } from './macro-api';
 
 export const addFoodItemAsync = createAsyncThunk(
@@ -49,6 +47,7 @@ export const deleteFoodLogAsync = createAsyncThunk(
   'macros/deleteFoodLog',
   async (log, { dispatch }) => {
     let response = await DeleteFoodLog(log);
+    console.log(response.data);
     dispatch(deleteFoodLog(response.data));
   }
 );
@@ -72,35 +71,36 @@ export const getDailyMacroTotalAsync = createAsyncThunk(
 export const getNutritionProfileAsync = createAsyncThunk(
   'macros/getNutritionProfile',
   async (id, { dispatch }) => {
-    console.log('here')
     let response = await GetNutritionProfile();
-    console.log(response.data);
-    dispatch(saveNutritionProfile(response.data));
+    dispatch(setNutritionProfile(response.data));
   }
 );
 
 export const saveNutritionProfileAsync = createAsyncThunk(
   'macros/saveNutritionProfile',
   async (nutritionProfile, { dispatch }) => {
-    let response = await SaveNutritionProfile(nutritionProfile );
-    dispatch(saveNutritionProfile(response.data));
+    let response = await SaveNutritionProfile(nutritionProfile);
+    dispatch(setNutritionProfile(response.data));
   }
 );
 
 export const macrosSlice = createSlice({
   name: 'macros',
   initialState: {
+    //TODO: setup calories and track it everywhere.
+    //also filter non numbers.
     dailyMacroTotals: {
       date: '',
       protein: 0,
       carbs: 0,
       fat: 0,
+      calories: 0,
     },
     nutritionProfile: {
       protein: 0,
       carbs: 0,
       fat: 0,
-      calories: 0
+      calories: 0,
     },
     foodItems: [],
     foodLogs: [],
@@ -148,6 +148,7 @@ export const macrosSlice = createSlice({
         protein: state.dailyMacroTotals.protein - action.payload.protein,
         carbs: state.dailyMacroTotals.carbs - action.payload.carbs,
         fat: state.dailyMacroTotals.fat - action.payload.fat,
+        calories: state.dailyMacroTotals.calories - action.payload.calories
       };
     },
     saveDailyMacroTotal: (state, action) => {
@@ -158,11 +159,12 @@ export const macrosSlice = createSlice({
         protein: state.dailyMacroTotals.protein + action.payload.protein,
         carbs: state.dailyMacroTotals.carbs + action.payload.carbs,
         fat: state.dailyMacroTotals.fat + action.payload.fat,
+        calories: state.dailyMacroTotals.calories + action.payload.calories
       };
     },
-    saveNutritionProfile: (state, action) => {
-      state.nutritionProfile = action.payload
-    }
+    setNutritionProfile: (state, action) => {
+      state.nutritionProfile = action.payload;
+    },
   },
 });
 
@@ -177,7 +179,7 @@ export const {
   removeDailyMacroTotal,
   addDailyMacroTotal,
   setCalories,
-  saveNutritionProfile,
+  setNutritionProfile,
   setProtein,
   setCarbs,
   setFat,
@@ -187,10 +189,15 @@ export const selectDailyMacroTotals = (state) =>
   state.macrosSliceReducer.dailyMacroTotals;
 export const selectFoodItems = (state) => state.macrosSliceReducer.foodItems;
 export const selectFoodLogs = (state) => state.macrosSliceReducer.foodLogs;
-export const selectProtein = (state) => state.macrosSliceReducer.nutritionProfile.protein;
-export const selectCarbs = (state) => state.macrosSliceReducer.nutritionProfile.carbs;
-export const selectFat = (state) => state.macrosSliceReducer.nutritionProfile.fat;
-export const selectCalories = (state) => state.macrosSliceReducer.nutritionProfile.calories;
-export const selectNutritionProfile = (state) => state.macrosSliceReducer.nutritionProfile;
+export const selectProtein = (state) =>
+  state.macrosSliceReducer.nutritionProfile.protein;
+export const selectCarbs = (state) =>
+  state.macrosSliceReducer.nutritionProfile.carbs;
+export const selectFat = (state) =>
+  state.macrosSliceReducer.nutritionProfile.fat;
+export const selectCalories = (state) =>
+  state.macrosSliceReducer.nutritionProfile.calories;
+export const selectNutritionProfile = (state) =>
+  state.macrosSliceReducer.nutritionProfile;
 
 export default macrosSlice.reducer;

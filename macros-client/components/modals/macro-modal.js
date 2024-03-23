@@ -12,8 +12,15 @@ import { output } from '../../src/output';
 const MacroModal = (props) => {
   const dispatch = useDispatch();
   const [macros, onChangeMacros] = useState('');
+
   const addMacro = () => {
-    const macro = { protein: 0, carbs: 0, fat: 0, [props.modalType]:Number(macros) }
+    const macro = {
+      protein: 0,
+      carbs: 0,
+      fat: 0,
+      [props.modalType]: Number(macros),
+    };
+    macro.calories = macro.protein * 4 + macro.carbs * 4 + macro.fat * 9,
     dispatch(addDailyMacroTotal(macro));
     dispatch(saveFoodLogAsync(macro));
     onChangeMacros('');

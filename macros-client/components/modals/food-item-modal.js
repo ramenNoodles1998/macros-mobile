@@ -34,6 +34,7 @@ const FoodItemModal = (props) => {
           protein: Number(protein),
           carbs: Number(carbs),
           fat: Number(fat),
+          calories: Number((protein * 4) + (carbs * 4) + (fat * 9)),
           serving,
         })
       );
@@ -45,6 +46,7 @@ const FoodItemModal = (props) => {
         protein: Number(protein),
         carbs: Number(carbs),
         fat: Number(fat),
+        calories: Number((protein * 4) + (carbs * 4) + (fat * 9)),
         serving,
       })
     );

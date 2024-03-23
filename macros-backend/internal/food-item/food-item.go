@@ -20,6 +20,7 @@ type FoodItemDB struct {
 	Protein float64
 	Carbs   float64
 	Fat     float64
+	Calories float64
 	Serving string
 }
 
@@ -30,6 +31,7 @@ type FoodItem struct {
 	Carbs   float64  `json:"carbs"`
 	Fat     float64  `json:"fat"`
 	Serving string  `json:"serving"`
+	Calories float64 `json:"calories"`
 }
 
 const tableName string = "dev-macros"
@@ -59,6 +61,7 @@ func saveFoodItem(w http.ResponseWriter, r *http.Request) {
 		Carbs: fi.Carbs,
 		Fat: fi.Fat,
 		Serving: fi.Serving,
+		Calories: fi.Calories,
 	}
 
 	returnFoodItem := FoodItem{
@@ -68,6 +71,7 @@ func saveFoodItem(w http.ResponseWriter, r *http.Request) {
 		Carbs: fi.Carbs,
 		Fat: fi.Fat,
 		Serving: fi.Serving,
+		Calories: fi.Calories,
 	}
 
 	var svc *dynamodb.DynamoDB = dynamoservice.DynamoService()
@@ -139,6 +143,7 @@ func getFoodItems(w http.ResponseWriter, r *http.Request) {
 			Carbs: fiDB.Carbs,
 			Fat: fiDB.Fat,
 			Serving: fiDB.Serving,
+			Calories: fiDB.Calories,
 		}
 
 		fi.Name, _ = strings.CutPrefix(fiDB.SortKey, namePrefix)
@@ -200,6 +205,7 @@ func getFoodItemId(w http.ResponseWriter, r *http.Request) {
 			Carbs: fiDB.Carbs,
 			Fat: fiDB.Fat,
 			Serving: fiDB.Serving,
+			Calories: fiDB.Calories,
 		}
 
 		fi.Name, _ = strings.CutPrefix(fiDB.SortKey, namePrefix)
