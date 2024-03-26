@@ -41,8 +41,8 @@ type Macro struct {
 
 const tableName string = "dev-macros"
 const (
-    YYYYMMDD = "20060102"
-	yyyyMMddHHmmss = "20060102150405"
+	RFC1123W = "Mon, 02 Jan 2006" 
+	RFC1123Z = "Mon, 02 Jan 2006 15:04:05 -0700"
 )
 const uuidRoman string = "123123"
 const LOG_PREFIX string = "LOG-"
@@ -66,7 +66,7 @@ func saveMacroLog(w http.ResponseWriter, r *http.Request) {
 
 	var svc *dynamodb.DynamoDB = dynamoservice.DynamoService()
 	if len(m.Date) == 0 {
-		m.Date = time.Now().Format(yyyyMMddHHmmss);
+		m.Date = time.Now().Format(RFC1123Z);
 	}
 
 	var macroLog = MacroLogDB {
@@ -111,6 +111,7 @@ func saveMacroLog(w http.ResponseWriter, r *http.Request) {
 func getMacroLogs(w http.ResponseWriter, r *http.Request) {
 	var svc *dynamodb.DynamoDB = dynamoservice.DynamoService()
 	//gets todays log
+	fmt.Println(time.Now().Format(RFC1123W))
 	result, err := svc.Query(&dynamodb.QueryInput{
 		TableName: aws.String(tableName),
 		KeyConditions: map[string]*dynamodb.Condition{
@@ -126,7 +127,7 @@ func getMacroLogs(w http.ResponseWriter, r *http.Request) {
 				ComparisonOperator: aws.String("BEGINS_WITH"),
 				AttributeValueList: []*dynamodb.AttributeValue {
 					{
-						S: aws.String(LOG_PREFIX + time.Now().Format(YYYYMMDD)),
+						S: aws.String(LOG_PREFIX + time.Now().Format(RFC1123W)),
 					},
 				},
 			},
@@ -287,7 +288,7 @@ func getDailyMacroTotal(w http.ResponseWriter, r *http.Request) {
 				ComparisonOperator: aws.String("BEGINS_WITH"),
 				AttributeValueList: []*dynamodb.AttributeValue {
 					{
-						S: aws.String(LOG_PREFIX + time.Now().Format(YYYYMMDD)),
+						S: aws.String(LOG_PREFIX + time.Now().Format(RFC1123W)),
 					},
 				},
 			},
@@ -299,7 +300,7 @@ func getDailyMacroTotal(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Got error calling GetItem: %s", err)
 		return
 	}
-	var ml = MacroLog{ Id: uuidRoman, Date: time.Now().Format(YYYYMMDD), Protein: 0, Carbs: 0, Fat: 0, Calories: 0, }
+	var ml = MacroLog{ Id: uuidRoman, Date: time.Now().Format(RFC1123W), Protein: 0, Carbs: 0, Fat: 0, Calories: 0, }
 	if result.Items == nil || len(result.Items) == 0 {
 		fmt.Printf("Could not find Daily Macro Total")
 		json.NewEncoder(w).Encode(ml)

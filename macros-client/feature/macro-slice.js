@@ -145,6 +145,7 @@ export const macrosSlice = createSlice({
     },
     removeDailyMacroTotal: (state, action) => {
       state.dailyMacroTotals = {
+        ...state.dailyMacroTotals,
         protein: state.dailyMacroTotals.protein - action.payload.protein,
         carbs: state.dailyMacroTotals.carbs - action.payload.carbs,
         fat: state.dailyMacroTotals.fat - action.payload.fat,
@@ -156,6 +157,7 @@ export const macrosSlice = createSlice({
     },
     addDailyMacroTotal: (state, action) => {
       state.dailyMacroTotals = {
+        ...state.dailyMacroTotals,
         protein: state.dailyMacroTotals.protein + action.payload.protein,
         carbs: state.dailyMacroTotals.carbs + action.payload.carbs,
         fat: state.dailyMacroTotals.fat + action.payload.fat,

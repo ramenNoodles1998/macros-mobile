@@ -37,7 +37,7 @@ const MacroLogs = () => {
       <View className='flex flex-row justify-between'>
         <MacroText className='text-lg'>Macro Logs</MacroText>
         {/* TODO: add date selector */}
-        <MacroText className='text-lg'>Date {macroTotals.date}</MacroText>
+        <MacroText className='text-lg'>{macroTotals.date}</MacroText>
       </View>
       <View className='grid grid-flow-row grid-cols-9'>
         <View className='col-span-2'>
