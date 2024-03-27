@@ -7,7 +7,7 @@ import {
   addDailyMacroTotal,
   saveFoodLogAsync,
 } from '../feature/macro-slice';
-import { View, FlatList, Pressable } from 'react-native';
+import { View, FlatList, Pressable, ScrollView } from 'react-native';
 import FoodItemModal from './modals/food-item-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { output } from '../src/output';
@@ -47,7 +47,7 @@ const FoodItemTable = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <FoodItemModal
         isEdit={true}
         macro={macro}
@@ -57,70 +57,50 @@ const FoodItemTable = () => {
       <FlatList
         data={foodItems}
         renderItem={({ item, index }) => (
-          <View
-            className={
-              'grid grid-flow-row grid-cols-12 justify-items-center m-2 p-1 rounded ' +
-              (index % 2 == 0 ? 'bg-teal-900' : 'bg-teal-800')
-            }
-          >
-            <MacroText className='col-span-3 row-span-3 text-lg'>
-              {item.name}
-            </MacroText>
-            <MacroText className='col-span-5 text-center'>
-              {item.protein}g protein
-            </MacroText>
-            <Pressable className='col-span-4' onPress={() => addFoodItem(item)}>
-              <MacroText
-                className={
-                  'm-1 p-1 rounded ' +
-                  (index % 2 == 0 ? 'bg-teal-800' : 'bg-teal-900')
-                }
-              >
-                Quick Add
-              </MacroText>
-            </Pressable>
-            <MacroText className='col-start-4 col-end-9 text-center'>
-              {item.carbs}g carbs
-            </MacroText>
-            <Pressable
-              className='col-start-9 col-end-12'
-              onPress={() => openModal(item)}
-            >
-              <MacroText
-                className={
-                  'm-1 p-1 rounded ' +
-                  (index % 2 == 0 ? 'bg-teal-800' : 'bg-teal-900')
-                }
-              >
-                Edit
-              </MacroText>
-            </Pressable>
-            <MacroText className='col-start-4 col-end-9 text-center'>
-              {item.fat}g fat
-            </MacroText>
-            <Pressable
-              className='col-start-10 col-end-12'
-              onPress={() => deleteFoodItem(item)}
-            >
-              <MacroText
-                className={
-                  'm-1 p-1 rounded ' +
-                  (index % 2 == 0 ? 'bg-teal-800' : 'bg-teal-900')
-                }
-              >
-                Delete
-              </MacroText>
-            </Pressable>
+          <View className='mx-3'>
+            <View className='flex flex-row justify-center bg-teal-900 rounded-t'>
+              <MacroText className='text-xl'>{item.name}</MacroText>
+            </View>
+            <View className='pt-3 pb-1 bg-teal-900'>
+              <View className='flex flex-row justify-around px-3 mx-1'>
+                <MacroText className='w-20 text-center'>Protein</MacroText>
+                <MacroText className='w-20 text-center'>Carbs</MacroText>
+                <MacroText className='w-20 text-center'>Fat</MacroText>
+              </View>
+            </View>                                  
+            <View className='pb-3 pt-1 bg-teal-900'>
+              <View className='flex flex-row justify-around p-3 mx-1 bg-teal-700 rounded'>
+                <MacroText className='w-20 text-center'>{item.protein}g</MacroText>
+                <MacroText className='w-20 text-center'>{item.carbs}g</MacroText>
+                <MacroText className='w-20 text-center'>{item.fat}g</MacroText>
+              </View>
+            </View>
+            <View className='flex flex-row justify-end p-1 bg-teal-900 rounded-b'>
+              <Pressable onPress={() => addFoodItem(item)}>
+                <MacroText
+                  className='m-1 p-1 rounded bg-teal-700 w-20 '
+                >
+                  Quick Add
+                </MacroText>
+              </Pressable>
+              <Pressable onPress={() => openModal(item)}>
+                <MacroText className='m-1 p-1 rounded bg-slate-800 w-20'>
+                  Edit
+                </MacroText>
+              </Pressable>
+              <Pressable onPress={() => deleteFoodItem(item)}>
+                <MacroText className='m-1 p-1 rounded bg-red-800 w-20'>
+                  Delete
+                </MacroText>
+              </Pressable>
+            </View>
           </View>
         )}
         keyExtractor={(fi) => fi.name}
+        horizontal
       />
-    </View>
+    </ScrollView>
   );
 };
-//TODO next layout
-//name
-// p c f //macros listed
-// actions
 
 export default FoodItemTable;
