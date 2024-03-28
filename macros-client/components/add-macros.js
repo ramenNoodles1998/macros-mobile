@@ -17,7 +17,7 @@ const AddMacros = (props) => {
   };
 
   return (
-    <View className='p-3 mx-3 shadow-2xl rounded-b rounded-tr bg-teal-800'>
+    <View className='p-3 mx-3 shadow-2xl rounded-b rounded-tr bg-teal-800 h-3/4'>
       <MacroModal
         modalType={modalType}
         setModalVisible={setMacroModalVisible}

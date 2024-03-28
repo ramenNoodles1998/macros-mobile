@@ -47,7 +47,7 @@ const FoodItemTable = () => {
   };
 
   return (
-    <ScrollView>
+    <View className='h-4/6'>
       <FoodItemModal
         isEdit={true}
         macro={macro}
@@ -57,7 +57,7 @@ const FoodItemTable = () => {
       <FlatList
         data={foodItems}
         renderItem={({ item, index }) => (
-          <View className='mx-3'>
+          <View className='my-3'>
             <View className='flex flex-row justify-center bg-teal-900 rounded-t'>
               <MacroText className='text-xl'>{item.name}</MacroText>
             </View>
@@ -97,9 +97,8 @@ const FoodItemTable = () => {
           </View>
         )}
         keyExtractor={(fi) => fi.name}
-        horizontal
       />
-    </ScrollView>
+    </View>
   );
 };
 
