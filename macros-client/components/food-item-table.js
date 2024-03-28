@@ -7,7 +7,7 @@ import {
   addDailyMacroTotal,
   saveFoodLogAsync,
 } from '../feature/macro-slice';
-import { View, FlatList, Pressable, ScrollView } from 'react-native';
+import { View, FlatList, Pressable, TextInput } from 'react-native';
 import FoodItemModal from './modals/food-item-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { output } from '../src/output';
@@ -22,12 +22,23 @@ const FoodItemTable = () => {
     calories: 0,
   });
   const [foodItemModalVisible, setFoodItemModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredFoodItems, setFilteredFoodItems] = useState([]);
   const foodItems = useSelector(selectFoodItems);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getFoodItemsAsync('123'));
   }, []);
+
+  // useEffect(() => {
+  //   if(searchQuery === '') {
+  //     setFilteredFoodItems(foodItems);
+  //   } else {
+  //     const foundFood = foodItems.filter(f => f.name.includes(searchQuery));
+  //     setFilteredFoodItems({...foundFood});
+  //   }
+  // }, [foodItems]);
 
   const deleteFoodItem = (item) => {
     dispatch(deleteFoodItemAsync(item));
@@ -46,16 +57,32 @@ const FoodItemTable = () => {
     setFoodItemModalVisible(true);
   };
 
+  const onChangeSearchQuery = (value) => {
+    setSearchQuery(value);
+    console.log(value)
+
+    const foundFood = foodItems.filter(f => f.name.includes(value));
+    console.log(foundFood)
+    setFilteredFoodItems(foundFood);
+  };
+
   return (
-    <View className='h-4/6'>
+    <View className='min-h-4/6 h-4/6'>
       <FoodItemModal
         isEdit={true}
         macro={macro}
         setModalVisible={setFoodItemModalVisible}
         modalVisible={foodItemModalVisible}
       ></FoodItemModal>
+      <TextInput
+        onChangeText={onChangeSearchQuery}
+        value={searchQuery}
+        placeholder={'Search Food Items...'}
+        inputMode='numeric'
+        className='block text-white w-full rounded-md border-0 py-1.5 pl-5 pr-20 ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6'
+      ></TextInput>
       <FlatList
-        data={foodItems}
+        data={searchQuery.length > 0 ? filteredFoodItems : foodItems}
         renderItem={({ item, index }) => (
           <View className='my-3'>
             <View className='flex flex-row justify-center bg-teal-900 rounded-t'>
