@@ -7,9 +7,11 @@ import MacrosText from './components/macro-components/macro-text';
 import MacroTotals from './components/macro-totals';
 import NutritonProfileModal from './components/modals/nutrition-profile-modal';
 import TabView from './components/tab-view';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const App = () => {
-  const [nutritionProfileModalVisible, setNutritionProfileModalVisible] = useState(false);
+  const [nutritionProfileModalVisible, setNutritionProfileModalVisible] =
+    useState(false);
   return (
     <View className='container mx-auto bg-teal-700'>
       <Provider store={store}>
@@ -20,10 +22,22 @@ const App = () => {
         <View className='flex flex-row justify-between'>
           <MacrosText className='text-3xl p-3'>Macro</MacrosText>
           <Pressable
-            onPress={() => setNutritionProfileModalVisible(!nutritionProfileModalVisible)}
+            className='rounded m-2 p-2 bg-teal-800'
+            onPress={() =>
+              setNutritionProfileModalVisible(!nutritionProfileModalVisible)
+            }
           >
-            {/* TODO: add cog icon */}
-            <MacrosText className='text-lg p-3'>Nutrition Profile</MacrosText>
+            <View className='flex flex-row'>
+              <Ionicons
+                className='p-2'
+                name='settings-sharp'
+                size={24}
+                color='white'
+              />
+              <MacrosText className='text-lg pl-1'>
+                Nutrition Profile
+              </MacrosText>
+            </View>
           </Pressable>
         </View>
         <MacroTotals />

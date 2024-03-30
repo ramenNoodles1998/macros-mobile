@@ -15,6 +15,8 @@ const AddMacros = (props) => {
     setModalType(value);
     setMacroModalVisible(true);
   };
+  //TODO fix height css
+  // edit does not work on filtered items.
 
   return (
     <View className='p-3 mx-3 shadow-2xl rounded-b rounded-tr bg-teal-800 min-h-3/4 h-3/4'>
