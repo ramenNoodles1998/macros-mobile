@@ -31,14 +31,15 @@ const FoodItemTable = () => {
     dispatch(getFoodItemsAsync('123'));
   }, []);
 
-  // useEffect(() => {
-  //   if(searchQuery === '') {
-  //     setFilteredFoodItems(foodItems);
-  //   } else {
-  //     const foundFood = foodItems.filter(f => f.name.includes(searchQuery));
-  //     setFilteredFoodItems({...foundFood});
-  //   }
-  // }, [foodItems]);
+  useEffect(() => {
+    if(searchQuery === '') {
+      setFilteredFoodItems(foodItems);
+      return;
+    } 
+    
+    const foundFood = foodItems.filter(f => f.name.includes(searchQuery));
+    setFilteredFoodItems([...foundFood]);
+  }, [foodItems]);
 
   const deleteFoodItem = (item) => {
     dispatch(deleteFoodItemAsync(item));
@@ -59,15 +60,15 @@ const FoodItemTable = () => {
 
   const onChangeSearchQuery = (value) => {
     setSearchQuery(value);
-    console.log(value)
 
     const foundFood = foodItems.filter(f => f.name.includes(value));
-    console.log(foundFood)
     setFilteredFoodItems(foundFood);
   };
 
+        // TODO: fix height css for food table.
+        //still add more icons for food items.
   return (
-    <View className='min-h-4/6 h-4/6'>
+    <View className='h-4/6'>
       <FoodItemModal
         isEdit={true}
         macro={macro}
@@ -80,7 +81,9 @@ const FoodItemTable = () => {
         placeholder={'Search Food Items...'}
         inputMode='numeric'
         className='block text-white w-full rounded-md border-0 py-1.5 pl-5 pr-20 ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6'
-      ></TextInput>
+      >
+        
+      </TextInput>
       <FlatList
         data={searchQuery.length > 0 ? filteredFoodItems : foodItems}
         renderItem={({ item, index }) => (

@@ -47,7 +47,6 @@ export const deleteFoodLogAsync = createAsyncThunk(
   'macros/deleteFoodLog',
   async (log, { dispatch }) => {
     let response = await DeleteFoodLog(log);
-    console.log(response.data);
     dispatch(deleteFoodLog(response.data));
   }
 );
@@ -87,8 +86,6 @@ export const saveNutritionProfileAsync = createAsyncThunk(
 export const macrosSlice = createSlice({
   name: 'macros',
   initialState: {
-    //TODO: setup calories and track it everywhere.
-    //also filter non numbers.
     dailyMacroTotals: {
       date: '',
       protein: 0,

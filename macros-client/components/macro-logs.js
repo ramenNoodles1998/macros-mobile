@@ -12,6 +12,7 @@ import {
   addDailyMacroTotal,
   selectCalories,
 } from '../feature/macro-slice';
+import { MaterialIcons } from '@expo/vector-icons';
 import { output } from '../src/output';
 
 const MacroLogs = () => {
@@ -32,46 +33,51 @@ const MacroLogs = () => {
     dispatch(saveFoodLogAsync(log));
   };
 
+  renderFooter = () => {
+    if (foodLogs.length === 0) {
+      return (
+        <View className='flex flex-row justify-center p-2'>
+          <MacroText className='text-lg'>No logs for today...</MacroText>
+        </View>
+      );
+    }
+
+    return null;
+  };
+
   return (
-    <View className='p-3 mx-3 shadow-2xl rounded-b bg-teal-800'>
-      <View className='flex flex-row justify-between'>
-        <MacroText className='text-lg'>Macro Logs</MacroText>
+    <View className='p-1 mx-3 shadow-2xl rounded-b rounded-tr bg-teal-800 text-center min-h-4/6'>
+      <View className='grid grid-flow-row p-2'>
         {/* TODO: add date selector */}
-        <MacroText className='text-lg'>{macroTotals.date}</MacroText>
+        <MacroText className='col-span-full text-lg text-center'>{macroTotals.date}</MacroText>
       </View>
-      <View className='grid grid-flow-row grid-cols-9'>
-        <View className='col-span-2'>
-          <MacroText>Protein</MacroText>
+      <View className='grid grid-flow-row grid-cols-12 p-3 rounded bg-teal-900 align-center justify-center'>
+        <View className='col-span-4'>
+          <MacroText className='text-lg text-center'>Protein</MacroText>
         </View>
-        <View className='col-span-2'>
-          <MacroText>Carbs</MacroText>
-        </View>
-        <View className='col-span-2'>
-          <MacroText>Fat</MacroText>
+        <View className='col-span-4'>
+          <MacroText className='text-lg text-center'>Carbs</MacroText>
         </View>
         <View className='col-span-3'>
-          <MacroText>Actions</MacroText>
+          <MacroText className='text-lg text-center'>Fat</MacroText>
+        </View>
+        <View className='col-span-1'>
         </View>
       </View>
       <FlatList
         data={foodLogs}
-        renderItem={({ item }) => (
-          <View className='grid grid-flow-row grid-cols-9'>
-            <MacroText className='col-span-2'>{item.protein}</MacroText>
-            <MacroText className='col-span-2'>{item.carbs}</MacroText>
-            <MacroText className='col-span-2'>{item.fat}</MacroText>
-            <View className='col-span-3 flex flex-row'>
-              <Pressable onPress={() => deleteFoodLog(item)}>
-                <MacroText>Delete</MacroText>
-              </Pressable>
-              {/* TODO: doesnt work should open modal. */}
-              <Pressable onPress={() => saveFoodLog(item)}>
-                <MacroText>Edit</MacroText>
-              </Pressable>
-            </View>
+        renderItem={({ item, index }) => (
+          <View className={'grid grid-flow-row grid-cols-12 p-3' + (index % 2 === 0 ? '' : ' rounded bg-teal-900')}>
+            <MacroText className='col-span-4 text-center'>{item.protein}g</MacroText>
+            <MacroText className='col-span-4 text-center'>{item.carbs}g</MacroText>
+            <MacroText className='col-span-3 text-center'>{item.fat}g</MacroText>
+            <Pressable className='col-span-1 text-center' onPress={() => deleteFoodLog(item)}>
+              <MaterialIcons name='delete' size={20} color='red' />
+            </Pressable>
           </View>
         )}
         keyExtractor={(fl) => fl.id + fl.date}
+        ListFooterComponent={this.renderFooter}
       ></FlatList>
     </View>
   );
