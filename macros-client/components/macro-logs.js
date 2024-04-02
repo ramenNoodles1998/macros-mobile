@@ -37,7 +37,7 @@ const MacroLogs = () => {
     if (foodLogs.length === 0) {
       return (
         <View className='flex flex-row justify-center p-2'>
-          <MacroText className='text-lg'>No logs for today...</MacroText>
+          <MacroText>No logs for today...</MacroText>
         </View>
       );
     }
@@ -47,11 +47,11 @@ const MacroLogs = () => {
 
   return (
     <View className='p-1 mx-3 shadow-2xl rounded-b rounded-tr bg-teal-800 text-center min-h-4/6'>
-      <View className='grid grid-flow-row p-2'>
+      <View className='grid grid-flow-row px-2 py-1'>
         {/* TODO: add date selector */}
         <MacroText className='col-span-full text-lg text-center'>{macroTotals.date}</MacroText>
       </View>
-      <View className='grid grid-flow-row grid-cols-12 p-3 rounded bg-teal-900 align-center justify-center'>
+      <View className='grid grid-flow-row grid-cols-12 px-2 py-1 rounded bg-teal-900 align-center justify-center'>
         <View className='col-span-4'>
           <MacroText className='text-lg text-center'>Protein</MacroText>
         </View>

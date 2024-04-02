@@ -75,7 +75,7 @@ const FoodItemModal = (props) => {
           >
             <MacroText>Close</MacroText>
           </Pressable>
-          <MacroText className='self-center text-lg'>Add Food Item</MacroText>
+          <MacroText className='self-center text-lg'>{props.isEdit ? 'Edit' : 'Add'} Food Item</MacroText>
         </View>
         <View className='flex flex-col justify-center content-center p-2'>
           <TextInput
