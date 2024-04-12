@@ -15,6 +15,7 @@ const MacroModal = (props) => {
 
   const addMacro = () => {
     const macro = {
+      date: new Date().toUTCString(),
       protein: 0,
       carbs: 0,
       fat: 0,

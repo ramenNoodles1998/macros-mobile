@@ -46,11 +46,15 @@ const FoodItemTable = () => {
   };
 
   const addFoodItem = (item) => {
+    console.log(item);
     let foodItem = {
       ...item,
     };
     dispatch(addDailyMacroTotal(foodItem));
-    dispatch(saveFoodLogAsync(foodItem));
+    dispatch(saveFoodLogAsync({
+      date: new Date().toUTCString(),
+      ...foodItem
+    }));
   };
 
   const openModal = (item) => {

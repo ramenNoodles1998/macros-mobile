@@ -42,7 +42,6 @@ type Macro struct {
 const tableName string = "dev-macros"
 const (
 	RFC1123W = "Mon, 02 Jan 2006" 
-	RFC1123Z = "Mon, 02 Jan 2006 15:04:05 -0700"
 )
 const uuidRoman string = "123123"
 const LOG_PREFIX string = "LOG-"
@@ -66,7 +65,7 @@ func saveMacroLog(w http.ResponseWriter, r *http.Request) {
 
 	var svc *dynamodb.DynamoDB = dynamoservice.DynamoService()
 	if len(m.Date) == 0 {
-		m.Date = time.Now().Format(RFC1123Z);
+		panic(": %s")
 	}
 
 	var macroLog = MacroLogDB {
