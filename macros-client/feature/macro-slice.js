@@ -135,6 +135,7 @@ export const macrosSlice = createSlice({
       );
     },
     saveFoodLog: (state, action) => {
+      console.log(date)
       const index = state.foodLogs.findIndex(
         (fl) => action.payload.date === fl.date
       );

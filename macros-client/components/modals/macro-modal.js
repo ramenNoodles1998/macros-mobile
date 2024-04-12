@@ -6,6 +6,7 @@ import {
   saveFoodLogAsync,
   addDailyMacroTotal,
 } from '../../feature/macro-slice';
+import moment from 'moment';
 import MacroText from '../macro-components/macro-text';
 import { output } from '../../src/output';
 
@@ -15,7 +16,7 @@ const MacroModal = (props) => {
 
   const addMacro = () => {
     const macro = {
-      date: new Date().toUTCString(),
+      date: moment().format('LLLL').split(',').join(''),
       protein: 0,
       carbs: 0,
       fat: 0,

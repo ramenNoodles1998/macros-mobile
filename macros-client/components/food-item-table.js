@@ -10,6 +10,7 @@ import {
 import { View, FlatList, Pressable, TextInput } from 'react-native';
 import FoodItemModal from './modals/food-item-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import { output } from '../src/output';
 
 const FoodItemTable = () => {
@@ -52,7 +53,7 @@ const FoodItemTable = () => {
     };
     dispatch(addDailyMacroTotal(foodItem));
     dispatch(saveFoodLogAsync({
-      date: new Date().toUTCString(),
+      date: moment().format('LLLL').split(',').join(''),
       ...foodItem
     }));
   };
