@@ -1,8 +1,9 @@
 import axios from 'axios';
+const API_STRING = 'http://44.223.70.101:3030';
 
 export async function AddMacroLog(macros) {
   try {
-    await axios.post('http://localhost:3030/api/save-macro-log', macros);
+    await axios.post(`${API_STRING}/api/save-macro-log`, macros);
   } catch (e) {
     console.warn(e);
   }
@@ -11,7 +12,7 @@ export async function AddMacroLog(macros) {
 export async function AddFoodItem(foodItem) {
   try {
     //TODO: get user id.
-    return await axios.post('http://localhost:3030/api/save-food-item', {
+    return await axios.post(`${API_STRING}/api/save-food-item`, {
       id: '123123',
       ...foodItem,
     });
@@ -23,7 +24,7 @@ export async function AddFoodItem(foodItem) {
 
 export async function DeleteFoodItem(foodItem) {
   try {
-    return await axios.post('http://localhost:3030/api/delete-food-item', {
+    return await axios.post(`${API_STRING}/api/delete-food-item`, {
       id: '123123',
       ...foodItem,
     });
@@ -35,7 +36,7 @@ export async function DeleteFoodItem(foodItem) {
 
 export async function GetFoodItems() {
   try {
-    return await axios.get('http://localhost:3030/api/get-food-items');
+    return await axios.get(`${API_STRING}/api/get-food-items`);
   } catch (e) {
     console.warn(e);
     return;
@@ -44,7 +45,7 @@ export async function GetFoodItems() {
 
 export async function GetFoodLogs() {
   try {
-    return await axios.get('http://localhost:3030/api/get-macro-logs');
+    return await axios.get(`${API_STRING}/api/get-macro-logs`);
   } catch (e) {
     console.warn(e);
   }
@@ -52,7 +53,7 @@ export async function GetFoodLogs() {
 
 export async function DeleteFoodLog(log) {
   try {
-    return await axios.post('http://localhost:3030/api/delete-macro-log', {
+    return await axios.post(`${API_STRING}/api/delete-macro-log`, {
       id: '123123',
       ...log
     });
@@ -63,7 +64,7 @@ export async function DeleteFoodLog(log) {
 
 export async function SaveFoodLog(log) {
   try {
-    return await axios.post('http://localhost:3030/api/save-macro-log', {
+    return await axios.post(`${API_STRING}/api/save-macro-log`, {
       id: '123123',
       ...log
     });
@@ -74,7 +75,7 @@ export async function SaveFoodLog(log) {
 
 export async function SaveDailyMacroTotal(macro) {
   try {
-    return await axios.post('http://localhost:3030/api/save-daily-macro-total', {
+    return await axios.post(`${API_STRING}/api/save-daily-macro-total`, {
       ...macro
     });
   } catch (e) {
@@ -85,7 +86,7 @@ export async function SaveDailyMacroTotal(macro) {
 
 export async function GetDailyMacroTotal() {
   try {
-    return await axios.get('http://localhost:3030/api/get-daily-macro-total');
+    return await axios.get(`${API_STRING}/api/get-daily-macro-total`);
   } catch (e) {
     console.warn(e);
   }
@@ -93,7 +94,7 @@ export async function GetDailyMacroTotal() {
 
 export async function GetNutritionProfile() {
   try {
-    return await axios.get('http://localhost:3030/api/get-nutrition-profile');
+    return await axios.get(`${API_STRING}/api/get-nutrition-profile`);
   } catch (e) {
     console.warn(e);
   }
@@ -101,7 +102,7 @@ export async function GetNutritionProfile() {
 
 export async function SaveNutritionProfile(nutritionProfile) {
   try {
-    return await axios.post('http://localhost:3030/api/save-nutrition-profile', nutritionProfile);
+    return await axios.post(`${API_STRING}/api/save-nutrition-profile`, nutritionProfile);
   } catch (e) {
     console.warn(e);
   }

@@ -15,7 +15,7 @@ func main() {
 	port := 3030
 	addr := fmt.Sprintf(":%d", port)
 	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost:8080", "*"},
+		AllowedOrigins: []string{"*", "*"},
 		AllowCredentials: true,
 	})
 
