@@ -13,7 +13,7 @@ const App = () => {
   const [nutritionProfileModalVisible, setNutritionProfileModalVisible] =
     useState(false);
   return (
-    <View className='container mx-auto bg-teal-700'>
+    <View className='container mx-auto bg-teal-700 h-screen'>
       <Provider store={store}>
         <NutritonProfileModal
           setModalVisible={setNutritionProfileModalVisible}
