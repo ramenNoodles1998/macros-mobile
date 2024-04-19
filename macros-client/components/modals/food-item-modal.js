@@ -69,6 +69,8 @@ const FoodItemModal = (props) => {
             onPress={() => props.setModalVisible(!props.modalVisible)}
             className='p-2 self-end rounded'
           >
+            //TODO: add overgoing on macros
+            //potentially creating and caching userId.
             <MacroText>Close</MacroText>
           </Pressable>
           <MacroText className='self-center text-lg'>{props.isEdit ? 'Edit' : 'Add'} Food Item</MacroText>
